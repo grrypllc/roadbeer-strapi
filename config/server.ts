@@ -4,4 +4,8 @@ export default ({ env }) => ({
   app: {
     keys: env.array('APP_KEYS'),
   },
+  url: env('PUBLIC_URL', 'http://localhost:1337'),
+  admin: {
+    url: env('ADMIN_URL', '/admin'),
+  },
 });

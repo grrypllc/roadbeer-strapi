@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "breweries",
+  "info": {
+    "singularName": "brewery",
+    "pluralName": "breweries",
+    "displayName": "Brewery",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "Name": {
+      "type": "string",
+      "required": true
+    },
+    "Address": {
+      "type": "string"
+    },
+    "RoadBeerScore": {
+      "type": "decimal",
+      "required": false
+    },
+    "road_beer_review": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::road-beer-review.road-beer-review"
+    }
+  }
+}
