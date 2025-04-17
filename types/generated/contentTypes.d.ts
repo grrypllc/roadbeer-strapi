@@ -369,6 +369,97 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiBreweryBrewery extends Struct.CollectionTypeSchema {
+  collectionName: 'breweries';
+  info: {
+    description: '';
+    displayName: 'Brewery';
+    pluralName: 'breweries';
+    singularName: 'brewery';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Address: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::brewery.brewery'
+    > &
+      Schema.Attribute.Private;
+    Name: Schema.Attribute.String & Schema.Attribute.Required;
+    publishedAt: Schema.Attribute.DateTime;
+    road_beer_review: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::road-beer-review.road-beer-review'
+    >;
+    RoadBeerScore: Schema.Attribute.Decimal;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiRoadBeerReviewRoadBeerReview
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'road_beer_reviews';
+  info: {
+    description: '';
+    displayName: 'RoadBeerReviews';
+    pluralName: 'road-beer-reviews';
+    singularName: 'road-beer-review';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    brewery: Schema.Attribute.Relation<'oneToOne', 'api::brewery.brewery'>;
+    city: Schema.Attribute.String;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    isPublished: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::road-beer-review.road-beer-review'
+    > &
+      Schema.Attribute.Private;
+    photos: Schema.Attribute.Media<'images' | 'files', true>;
+    publishedAt: Schema.Attribute.DateTime;
+    reviewText: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    roadBeerScore: Schema.Attribute.Decimal &
+      Schema.Attribute.Required &
+      Schema.Attribute.SetMinMax<
+        {
+          max: 10;
+          min: 0;
+        },
+        number
+      >;
+    state: Schema.Attribute.String;
+    tags: Schema.Attribute.Enumeration<
+      [
+        'Family-Friendly',
+        'Pet-Friendly',
+        'Food Trucks',
+        'In-House Kitchen',
+        'Outdoor Seating',
+        'Live Music',
+      ]
+    >;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    visitDate: Schema.Attribute.Date & Schema.Attribute.Required;
+    youTubeEmbed: Schema.Attribute.String;
+  };
+}
+
 export interface PluginContentReleasesRelease
   extends Struct.CollectionTypeSchema {
   collectionName: 'strapi_releases';
@@ -878,6 +969,8 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::brewery.brewery': ApiBreweryBrewery;
+      'api::road-beer-review.road-beer-review': ApiRoadBeerReviewRoadBeerReview;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;
