@@ -1,0 +1,66 @@
+{
+  "kind": "collectionType",
+  "collectionName": "road_beer_reviews",
+  "info": {
+    "singularName": "road-beer-review",
+    "pluralName": "road-beer-reviews",
+    "displayName": "RoadBeerReviews",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "brewery": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::brewery.brewery"
+    },
+    "city": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "roadBeerScore": {
+      "type": "decimal",
+      "required": true,
+      "max": 10,
+      "min": 0
+    },
+    "reviewText": {
+      "type": "blocks",
+      "required": true
+    },
+    "photos": {
+      "allowedTypes": [
+        "images",
+        "files"
+      ],
+      "type": "media",
+      "multiple": true
+    },
+    "youTubeEmbed": {
+      "type": "string"
+    },
+    "visitDate": {
+      "type": "date",
+      "required": true
+    },
+    "tags": {
+      "type": "enumeration",
+      "enum": [
+        "Family-Friendly",
+        "Pet-Friendly",
+        "Food Trucks",
+        "In-House Kitchen",
+        "Outdoor Seating",
+        "Live Music"
+      ]
+    },
+    "isPublished": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}
